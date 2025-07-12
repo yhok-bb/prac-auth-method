@@ -39,5 +39,8 @@ module PracticeApi
                  credentials: false
       end
     end
+
+    # # レート制限設定
+    config.middleware.use Rack::Attack
   end
 end
