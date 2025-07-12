@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/practice_api_development
+      - REDIS_URL=redis://redis:6379
+      - RAILS_ENV=development
+    depends_on:
+      - db
+      - redis
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails server -b 0.0.0.0"
+
   db:
     image: postgres:15
     environment:
